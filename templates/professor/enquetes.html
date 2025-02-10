@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+
+{% block pagetitle %}Minhas Enquetes{% endblock %}
+
+{% block content %}
+  <div class="container py-5">
+    {% include '_flashes.html' %}
+  
+    <div class="d-flex w-100 justify-content-between align-items-center">
+      <h2><strong>Minhas Enquetes</strong></h2>
+
+      <a href="{{ url_for('professor_nova_enquete') }}" class="btn btn-success">+ Nova Enquete</a>
+    </div>
+
+    <div class="mt-4">
+      {% for enquete in enquetes %}
+        <div class="bg-light p-3 d-flex justify-content-between align-items-center mt-4">
+          <div>
+            <h5 class="mb-0"><strong>{{ enquete.titulo }}</strong></h5>
+
+            <div class="text-muted pt-1">
+              <small>Criado em {{ enquete.criado_em }}</small>
+            </div>
+          </div>
+          
+          <a href="{{ url_for('professor_ver_resultados', enquete_id=enquete.id) }}" class="btn btn-secondary">Ver Resultados</a>
+        </div>
+      {% endfor %}
+
+      {% if enquetes|length == 0 %}
+        <div class="empty-state">
+          <img src="{{ url_for('static', filename='images/empty-box.svg') }}" alt="Sem enquetes">
+
+          <h4><strong>Não há enquetes criadas</strong></h4>
+
+          <div class="text-muted">
+            Comece criando uma enquete para disponibilizar aos seus alunos.
+          </div>
+
+          <a href="{{ url_for('professor_nova_enquete') }}" class="btn btn-success mt-3">+ Nova Enquete</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
