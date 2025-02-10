@@ -19,13 +19,23 @@
             <h5 class="mb-0"><strong>{{ enquete.titulo }}</strong></h5>
 
             <div class="text-muted pt-1">
-              <small>Criado em {{ enquete.criado_em }}</small>
+              <small>Criado em {{ enquete.criado_em }} &middot; Prazo para respostas: {{ enquete.prazo }}</small>
             </div>
           </div>
           
           <a href="{{ url_for('professor_ver_resultados', enquete_id=enquete.id) }}" class="btn btn-secondary">Ver Resultados</a>
         </div>
       {% endfor %}
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        {% if page > 1 %}
+          <a href="{{ url_for('professor_enquetes', page=page-1) }}" class="btn btn-outline-secondary"><i data-lucide="move-left"></i>&emsp;Página anterior</a>
+        {% endif %}
+
+        {% if has_next %}
+          <a href="{{ url_for('professor_enquetes', page=page+1) }}" class="btn btn-outline-secondary">Próxima página&emsp;<i data-lucide="move-right"></i></a>
+        {% endif %}
+      </div>
 
       {% if enquetes|length == 0 %}
         <div class="empty-state">
